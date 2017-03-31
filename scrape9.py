@@ -34,9 +34,6 @@ ascii_dict = {'%3A': ':', '%2F': '/', '%3D': '=', '%3F': '?', '%25':'%',
 	
 headers={'user-agent' : "Mo"}
 
-path = "E:\Yelp\Yelp_Scrapes\Scrape9_0317"
-
-os.chdir(path)
 
 def multiple_replace(dict, text):
     """http://stackoverflow.com/questions/15175142/
@@ -66,7 +63,7 @@ def remove_duplicates(num):
 	seen_add = seen.add
 	return [el for el in num if not (el in seen or seen_add(el))]
 	
-def listmaker(area, csvname, maintree, agentlist, neigh_out):
+def listmaker(area, csvname, maintree, agentlist, neigh_out, path):
 
 	# ipurl ='http://my-ip.herokuapp.com/'
 	# mainpage3 = requests.get(ipurl)
@@ -305,7 +302,7 @@ def listmaker(area, csvname, maintree, agentlist, neigh_out):
 	return "Neighborhood Parsed!"
 
 				
-def menu_grabber(done_rest, area, csvname, haveyelp, yelpgot, haveexternal, gotexternal, agentlist):
+def menu_grabber(done_rest, area, csvname, haveyelp, yelpgot, haveexternal, gotexternal, agentlist, path):
 
 	
 	yelpmenu = False
@@ -513,12 +510,17 @@ def menu_grabber(done_rest, area, csvname, haveyelp, yelpgot, haveexternal, gote
 
 	return done_rest, haveexternal, gotexternal, haveyelp, yelpgot
 			
-def main():
+def main(scrape_name):
 	""" Drive function """
 	# print("waiting to start...")
 	# time.sleep(60)
 
 	start_time = time.time()
+	
+	
+	path = "E:\Yelp\Yelp_Scrapes\Scrape_" + scrape_name
+
+	os.chdir(path)
 	
 	agentlist = []
 	with open("user_agents.csv", 'r') as csvfile:
@@ -700,13 +702,13 @@ def main():
 						print("ADDED FIRST NEIGHBORHOOD TO DONE: %s" %cities[0])
 					continue
 				time.sleep(1.5)
-				j = listmaker(state_neigh, csvname, maintree, agentlist, neigh_out)
+				j = listmaker(state_neigh, csvname, maintree, agentlist, neigh_out, path)
 				print(j)
 				
 				#j= "Hi"
 				print("Parsing the Menus.............")
 				if j != "Nothing was Found" and j:
-					done_rest, haveexternal, gotexternal, haveyelp, yelpgot = menu_grabber(done_rest, state_neigh,csvname, haveyelp, yelpgot, haveexternal, gotexternal, agentlist)
+					done_rest, haveexternal, gotexternal, haveyelp, yelpgot = menu_grabber(done_rest, state_neigh,csvname, haveyelp, yelpgot, haveexternal, gotexternal, agentlist, area)
 				
 				
 				
@@ -738,4 +740,4 @@ def main():
 	os.chdir(maindir)
 	
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1])
