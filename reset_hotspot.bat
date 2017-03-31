@@ -6,8 +6,8 @@ netsh interface set interface "Wi-Fi" Disable
 TIMEOUT 30
 netsh interface set interface "Wi-Fi" Enable
 TIMEOUT 100
-netsh wlan connect name=belkin.f6a
-REM netsh wlan connect name=QuodEratDemonstrandum
+REM netsh wlan connect name=belkin.f6a
+netsh wlan connect name=QuodEratDemonstrandum
 REM TIMEOUT 10
 REM netsh wlan connect name=belkin.f6a
 REM netsh wlan connect name=Pretty Fly For a WiFi
